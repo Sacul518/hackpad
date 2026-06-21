@@ -36,9 +36,11 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 ## Project status
 
 - [x] Schematic (ERC clean)
-- [x] PCB layout — components placed, all nets routed (DRC clean apart from intentional diode-under-switch placement)
-- [x] Rounded board outline (63 × 105 mm)
-- [ ] Mounting holes
+- [x] PCB layout — components placed, all nets routed
+- [x] Rounded board outline (~68 × 105 mm)
+- [x] Mounting holes (4× M2)
+- [x] GND copper pour (both layers)
+- [x] DRC clean (apart from intentional diode-under-switch placement)
 - [ ] 3D-printed case
 - [ ] Firmware (QMK / KMK — TBD)
 
