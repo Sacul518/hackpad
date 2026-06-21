@@ -1,0 +1,19 @@
+# KiCad backups & autosaves
+*-backups/
+*.bak
+*.kicad_pcb-bak
+*.kicad_sch-bak
+_autosave-*
+fp-info-cache
+
+# KiCad lock files
+~*.lck
+
+# KiCad local project settings (per-machine GUI state)
+*.kicad_prl
+
+# macOS
+.DS_Store
+
+# VS Code "Local History" extension
+.history/
