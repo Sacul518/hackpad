@@ -41,7 +41,8 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] Mounting holes (4× M2)
 - [x] GND copper pour (both layers)
 - [x] DRC clean (apart from intentional diode-under-switch placement)
-- [ ] 3D-printed case
+- [x] STEP 3D model exported (for case design)
+- [ ] 3D-printed case (in progress — Fusion 360)
 - [ ] Firmware (QMK / KMK — TBD)
 
 ## Repository layout
@@ -51,6 +52,7 @@ hackpad.kicad_pro    KiCad project
 hackpad.kicad_sch    Schematic
 hackpad.kicad_pcb    PCB layout
 KiCAD-lib/           Project-specific footprints
+export/hackpad.step  3D model of the PCB (reference for case design)
 ```
 
 ## Building
