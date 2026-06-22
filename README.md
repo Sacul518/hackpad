@@ -42,7 +42,8 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] GND copper pour (both layers)
 - [x] DRC clean (apart from intentional diode-under-switch placement)
 - [x] STEP 3D model exported (for case design)
-- [ ] 3D-printed case (in progress — Fusion 360)
+- [x] Case — bottom tray (Tinkercad: walls, USB cutout, 4× M2 standoffs, encoder support boss)
+- [ ] Case — top plate (OLED window, encoder shaft, keycap access)
 - [ ] Firmware (QMK / KMK — TBD)
 
 ## Repository layout
@@ -53,6 +54,7 @@ hackpad.kicad_sch    Schematic
 hackpad.kicad_pcb    PCB layout
 KiCAD-lib/           Project-specific footprints
 export/hackpad.step  3D model of the PCB (reference for case design)
+case/                3D-printed case models (Tinkercad → STL)
 ```
 
 ## Building
