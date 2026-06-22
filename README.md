@@ -43,7 +43,7 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] DRC clean (apart from intentional diode-under-switch placement)
 - [x] STEP 3D model exported (for case design)
 - [x] Case — bottom tray (Tinkercad: walls, USB cutout, 4× M2 standoffs, encoder support boss)
-- [ ] Case — top plate (OLED window, encoder shaft, keycap access)
+- [x] Case — top plate (open/tray-mount style: large switch opening, OLED window, encoder cutout)
 - [ ] Firmware (QMK / KMK — TBD)
 
 ## Repository layout
