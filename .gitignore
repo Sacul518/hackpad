@@ -17,3 +17,11 @@ fp-info-cache
 
 # VS Code "Local History" extension
 .history/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# CircuitPython library bundle (copied onto the device, not versioned)
+firmware/lib/*
+!firmware/lib/README.md

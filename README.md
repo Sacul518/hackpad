@@ -44,7 +44,9 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] STEP 3D model exported (for case design)
 - [x] Case — bottom tray (Tinkercad: walls, USB cutout, 4× M2 standoffs, encoder support boss)
 - [x] Case — top plate (open/tray-mount style: large switch opening, OLED window, encoder cutout)
-- [ ] Firmware (QMK / KMK — TBD)
+- [x] Firmware — CircuitPython base (matrix, encoder profile-browser, OLED, JSON-config macro engine)
+- [ ] Firmware — hardware bring-up & test (pending physical board)
+- [ ] Configurator app (Python + CustomTkinter)
 
 ## Repository layout
 
@@ -55,6 +57,8 @@ hackpad.kicad_pcb    PCB layout
 KiCAD-lib/           Project-specific footprints
 export/hackpad.step  3D model of the PCB (reference for case design)
 case/                3D-printed case models (Tinkercad → STL)
+firmware/            CircuitPython firmware (config-driven macro engine)
+docs/                config.json schema & script-syntax contract
 ```
 
 ## Building
