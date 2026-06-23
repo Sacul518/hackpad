@@ -136,7 +136,10 @@ class HackpadApp(ctk.CTk):
         # Profil-Selektor
         ctk.CTkLabel(left, text="Profile", anchor="w",
                      font=("", 13, "bold")).pack(fill="x", padx=14)
-        self.profile_bar = ctk.CTkFrame(left, fg_color="transparent")
+        self._profile_widgets = []
+        self.profile_bar = ctk.CTkScrollableFrame(
+            left, orientation="horizontal", height=46,
+            fg_color="transparent")
         self.profile_bar.pack(fill="x", padx=14, pady=(2, 6))
 
         rename = ctk.CTkFrame(left, fg_color="transparent")
@@ -331,8 +334,11 @@ class HackpadApp(ctk.CTk):
         return self.config_data["profiles"][self.profile_idx]
 
     def _refresh_profiles(self):
-        for w in self.profile_bar.winfo_children():
+        # Nur unsere eigenen Buttons zerstoeren (nicht die internen
+        # Scroll-Widgets des CTkScrollableFrame).
+        for w in self._profile_widgets:
             w.destroy()
+        self._profile_widgets = []
         for i, p in enumerate(self.config_data["profiles"]):
             sel = i == self.profile_idx
             b = ctk.CTkButton(
@@ -340,9 +346,11 @@ class HackpadApp(ctk.CTk):
                 fg_color=ACCENT if sel else "gray30",
                 command=lambda i=i: self._select_profile(i))
             b.pack(side="left", padx=2)
-        ctk.CTkButton(self.profile_bar, text="+", width=34, height=28,
-                      fg_color="gray20",
-                      command=self._add_profile).pack(side="left", padx=2)
+            self._profile_widgets.append(b)
+        plus = ctk.CTkButton(self.profile_bar, text="+", width=34, height=28,
+                             fg_color="gray20", command=self._add_profile)
+        plus.pack(side="left", padx=2)
+        self._profile_widgets.append(plus)
         # Name + OS-Felder fuellen
         self.name_entry.delete(0, "end")
         self.name_entry.insert(0, self.profile["name"])

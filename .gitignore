@@ -29,3 +29,8 @@ firmware/lib/*
 # App: virtualenv + local working copy
 app/.venv/
 app/last_config.json
+
+# App: PyInstaller build output
+app/build/
+app/dist/
+app/*.spec

@@ -47,7 +47,8 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] Firmware — CircuitPython base (matrix, encoder profile-browser, OLED, JSON-config macro engine)
 - [ ] Firmware — hardware bring-up & test (pending physical board)
 - [x] Configurator app — base GUI (Python + CustomTkinter: device detect, profiles, key editor, save to device)
-- [ ] Configurator app — polish (OLED preview, packaging for Win/Mac/Linux)
+- [x] Configurator app — full 100% virtual keyboard (QWERTZ, per-OS Win/Mac layout), scrollable profiles, double-click build (PyInstaller)
+- [ ] Configurator app — cross-OS packaging (Windows .exe / Linux build)
 
 ## Repository layout
 
