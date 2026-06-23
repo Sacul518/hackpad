@@ -17,12 +17,14 @@ APP_VERSION = "0.1"
 ACCENT = "#2563eb"
 OK_GREEN = "#16a34a"
 OFF_GRAY = "#6b7280"
-KEY_BG = "gray28"
-KEY_DEAD = "gray18"
+KEY_BG = "#3a3f4b"      # normale Taste
+MOD_BG = "#4b5160"      # Modifier (etwas heller -> hebt sich ab)
+KEY_DEAD = "#262a32"    # inaktive Deko-Taste
 
 # Pixel pro Tasteneinheit fuer die virtuelle Tastatur
-XUNIT = 33
-YUNIT = 35
+XUNIT = 36
+YUNIT = 38
+KEY_PAD = 3             # Luft rund um jede Taste (-> 2*KEY_PAD Abstand)
 
 _MODIFIERS = {"GUI", "CONTROL", "ALT", "RIGHT_ALT", "SHIFT"}
 
@@ -39,8 +41,8 @@ class HackpadApp(ctk.CTk):
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         self.title("Hackpad Konfigurator")
-        self.geometry("1300x820")
-        self.minsize(1180, 740)
+        self.geometry("1340x840")
+        self.minsize(1280, 760)
 
         self.config_data = config_io.load_local()
         self.profile_idx = 0
@@ -154,9 +156,13 @@ class HackpadApp(ctk.CTk):
         right.grid_columnconfigure(0, weight=1)
         right.grid_rowconfigure(2, weight=1)
 
-        self.key_header = ctk.CTkLabel(right, text="Taste 1",
+        head = ctk.CTkFrame(right, fg_color="transparent")
+        head.grid(row=0, column=0, sticky="w", padx=16, pady=(14, 0))
+        self.key_header = ctk.CTkLabel(head, text="Taste 1",
                                        font=("", 18, "bold"))
-        self.key_header.grid(row=0, column=0, sticky="w", padx=16, pady=(14, 0))
+        self.key_header.pack(side="left")
+        self.key_sub = ctk.CTkLabel(head, text="", text_color=OFF_GRAY)
+        self.key_sub.pack(side="left", padx=10)
 
         labelrow = ctk.CTkFrame(right, fg_color="transparent")
         labelrow.grid(row=1, column=0, sticky="ew", padx=16, pady=8)
@@ -193,8 +199,13 @@ class HackpadApp(ctk.CTk):
         self.kbd_frame.pack(anchor="w", pady=4)
         self.kbd_frame.pack_propagate(False)
         self.combo_preview = ctk.CTkLabel(tab, text="Kombi: (leer)",
-                                          text_color="#7dd3fc")
-        self.combo_preview.pack(anchor="w", pady=6)
+                                          text_color="#7dd3fc",
+                                          font=("", 14, "bold"))
+        self.combo_preview.pack(anchor="w", pady=(6, 0))
+        ctk.CTkLabel(
+            tab, text="Modifier (heller) zum Kombinieren · blau = aktiv · "
+                      "nochmal klicken = abwählen",
+            text_color=OFF_GRAY, font=("", 11)).pack(anchor="w")
         self._build_keyboard()
 
     def _build_keyboard(self):
@@ -203,14 +214,15 @@ class HackpadApp(ctk.CTk):
         self._kbd_buttons = []
         for spec in kl.build(self.os_menu.get()):
             dead = spec["name"] is None
+            base = KEY_DEAD if dead else (MOD_BG if spec["mod"] else KEY_BG)
             b = ctk.CTkButton(
                 self.kbd_frame, text=spec["label"], font=("", 11),
-                width=int(spec["w"] * XUNIT) - 3,
-                height=int(spec["h"] * YUNIT) - 3,
-                corner_radius=4,
-                fg_color=KEY_DEAD if dead else KEY_BG, hover=not dead,
+                width=int(spec["w"] * XUNIT) - 2 * KEY_PAD,
+                height=int(spec["h"] * YUNIT) - 2 * KEY_PAD,
+                corner_radius=5, border_width=1, border_color="#20242c",
+                fg_color=base, hover=not dead,
                 command=(None if dead else (lambda s=spec: self._on_key_click(s))))
-            b.place(x=spec["x"] * XUNIT + 1, y=spec["y"] * YUNIT + 1)
+            b.place(x=spec["x"] * XUNIT + KEY_PAD, y=spec["y"] * YUNIT + KEY_PAD)
             self._kbd_buttons.append((spec, b))
         self._refresh_kbd_highlight()
 
@@ -233,7 +245,8 @@ class HackpadApp(ctk.CTk):
                 continue
             active = (name in self.sel_mods) if spec["mod"] \
                 else (name == self.sel_main)
-            btn.configure(fg_color=ACCENT if active else KEY_BG)
+            base = MOD_BG if spec["mod"] else KEY_BG
+            btn.configure(fg_color=ACCENT if active else base)
 
     _MOD_ORDER = ("GUI", "CONTROL", "ALT", "RIGHT_ALT", "SHIFT")
 
@@ -383,6 +396,11 @@ class HackpadApp(ctk.CTk):
         self.key_header.configure(text="Taste %d" % (i + 1))
         self._refresh_keys()
         self._load_key_into_editor()
+        self._update_key_sub()
+
+    def _update_key_sub(self):
+        action = self.profile["keys"][self.key_idx].get("action")
+        self.key_sub.configure(text="→ " + _action_summary(action))
 
     # ===================================================================
     # Editor laden / anwenden
@@ -449,6 +467,7 @@ class HackpadApp(ctk.CTk):
         key["label"] = self.label_entry.get().strip()
         key["action"] = action
         self._refresh_keys()
+        self._update_key_sub()
         self.editor_status.configure(
             text="✓ Taste %d gespeichert" % (self.key_idx + 1),
             text_color=OK_GREEN)
@@ -484,6 +503,24 @@ class HackpadApp(ctk.CTk):
                 self.conn_dot.configure(text_color=OFF_GRAY)
                 self.conn_label.configure(text="Hackpad getrennt")
         self.after(2000, self._poll_connection)
+
+
+def _action_summary(action):
+    """Kurze, menschenlesbare Zusammenfassung einer Aktion fuer die Anzeige."""
+    if not action:
+        return "leer"
+    kind = action.get("type")
+    if kind == "combo":
+        return " + ".join(action.get("keys", []))
+    if kind == "key":
+        return action.get("key", "")
+    if kind == "string":
+        return '"%s"' % action.get("text", "")
+    if kind == "media":
+        return "Media: %s" % action.get("code", "")
+    if kind == "sequence":
+        return "Sequenz (%d Schritte)" % len(action.get("steps", []))
+    return "?"
 
 
 def _action_to_script(action):
