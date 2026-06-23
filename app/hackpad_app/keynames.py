@@ -32,13 +32,18 @@ CANONICAL.update(chr(c) for c in range(ord("A"), ord("Z") + 1))   # A..Z
 CANONICAL.update(_DIGITS)                                          # ONE..ZERO
 CANONICAL.update("F%d" % i for i in range(1, 13))                  # F1..F12
 CANONICAL.update([
-    "GUI", "CONTROL", "SHIFT", "ALT",
+    "GUI", "CONTROL", "SHIFT", "ALT", "RIGHT_ALT",
     "ENTER", "ESCAPE", "TAB", "SPACEBAR", "BACKSPACE", "DELETE",
     "LEFT_ARROW", "RIGHT_ARROW", "UP_ARROW", "DOWN_ARROW",
     "HOME", "END", "PAGE_UP", "PAGE_DOWN", "INSERT",
-    "CAPS_LOCK", "PRINT_SCREEN",
+    "CAPS_LOCK", "PRINT_SCREEN", "SCROLL_LOCK",
     "MINUS", "EQUALS", "LEFT_BRACKET", "RIGHT_BRACKET", "BACKSLASH",
     "SEMICOLON", "QUOTE", "GRAVE_ACCENT", "COMMA", "PERIOD", "FORWARD_SLASH",
+    # Nummernblock
+    "KEYPAD_NUMLOCK", "KEYPAD_FORWARD_SLASH", "KEYPAD_ASTERISK",
+    "KEYPAD_MINUS", "KEYPAD_PLUS", "KEYPAD_ENTER", "KEYPAD_PERIOD",
+    "KEYPAD_ZERO", "KEYPAD_ONE", "KEYPAD_TWO", "KEYPAD_THREE", "KEYPAD_FOUR",
+    "KEYPAD_FIVE", "KEYPAD_SIX", "KEYPAD_SEVEN", "KEYPAD_EIGHT", "KEYPAD_NINE",
 ])
 
 MEDIA = {

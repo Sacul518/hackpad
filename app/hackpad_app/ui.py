@@ -10,25 +10,22 @@ import customtkinter as ctk
 
 from . import config_io, device, osmap, keynames
 from . import script_parser as sp
+from . import keyboard_layouts as kl
 
 APP_VERSION = "0.1"
 
 ACCENT = "#2563eb"
 OK_GREEN = "#16a34a"
 OFF_GRAY = "#6b7280"
+KEY_BG = "gray28"
+KEY_DEAD = "gray18"
 
-# Tastatur-Layout fuer den Kombi-Tab (Anzeige-Text, kanonischer Name).
-_NUMS = [(str(i), str(i)) for i in range(1, 10)] + [("0", "0")]
-_ROW1 = list("QWERTYUIOP")
-_ROW2 = list("ASDFGHJKL")
-_ROW3 = list("ZXCVBNM")
-_SPECIAL = [
-    ("Enter", "ENTER"), ("Tab", "TAB"), ("Esc", "ESCAPE"),
-    ("Space", "SPACEBAR"), ("Backsp", "BACKSPACE"), ("Del", "DELETE"),
-    ("<-", "LEFT_ARROW"), ("->", "RIGHT_ARROW"),
-    ("Up", "UP_ARROW"), ("Down", "DOWN_ARROW"),
-]
-_MODS = [("GUI"), ("CONTROL"), ("ALT"), ("SHIFT")]
+# Pixel pro Tasteneinheit fuer die virtuelle Tastatur
+XUNIT = 33
+YUNIT = 35
+
+_MODIFIERS = {"GUI", "CONTROL", "ALT", "RIGHT_ALT", "SHIFT"}
+
 _MEDIA = [
     ("Play/Pause", "PLAY_PAUSE"), ("Vol +", "VOLUME_UP"), ("Vol -", "VOLUME_DOWN"),
     ("Mute", "MUTE"), ("Next", "NEXT_TRACK"), ("Prev", "PREV_TRACK"),
@@ -42,8 +39,8 @@ class HackpadApp(ctk.CTk):
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         self.title("Hackpad Konfigurator")
-        self.geometry("1140x720")
-        self.minsize(1000, 640)
+        self.geometry("1300x820")
+        self.minsize(1180, 740)
 
         self.config_data = config_io.load_local()
         self.profile_idx = 0
@@ -53,8 +50,7 @@ class HackpadApp(ctk.CTk):
         # Kombi-Editor-Status
         self.sel_mods = set()
         self.sel_main = None
-        self._mod_buttons = {}
-        self._mainkey_buttons = {}
+        self._kbd_buttons = []
         self.media_choice = None
         self._media_buttons = {}
 
@@ -184,64 +180,65 @@ class HackpadApp(ctk.CTk):
         self.editor_status = ctk.CTkLabel(apply_row, text="", text_color=OFF_GRAY)
         self.editor_status.pack(side="left", padx=12)
 
-    # -- Kombi-Tab -------------------------------------------------------
+    # -- Kombi-Tab (echtes 100%-Tastatur-Layout) ------------------------
     def _build_tab_kombi(self, tab):
-        ctk.CTkLabel(tab, text="Modifier + eine Taste wählen:").pack(
-            anchor="w", pady=(6, 4))
-        modrow = ctk.CTkFrame(tab, fg_color="transparent")
-        modrow.pack(anchor="w")
-        for mod in _MODS:
-            b = ctk.CTkButton(modrow, text=mod, width=80,
-                              fg_color="gray30",
-                              command=lambda m=mod: self._toggle_mod(m))
-            b.pack(side="left", padx=3)
-            self._mod_buttons[mod] = b
-
-        kb = ctk.CTkScrollableFrame(tab, height=230)
-        kb.pack(fill="both", expand=True, pady=8)
-        self._add_key_row(kb, [(n, n) for n in [str(i) for i in range(1, 10)] + ["0"]])
-        self._add_key_row(kb, [(c, c) for c in _ROW1])
-        self._add_key_row(kb, [(c, c) for c in _ROW2])
-        self._add_key_row(kb, [(c, c) for c in _ROW3])
-        self._add_key_row(kb, _SPECIAL)
-        self._add_key_row(kb, [("F%d" % i, "F%d" % i) for i in range(1, 13)])
-
+        ctk.CTkLabel(
+            tab,
+            text="Modifier + eine Taste anklicken (Layout passt sich ans Ziel-OS an):",
+            text_color=OFF_GRAY).pack(anchor="w", pady=(6, 4))
+        self.kbd_frame = ctk.CTkFrame(
+            tab, fg_color="transparent",
+            width=int(kl.TOTAL_W * XUNIT) + 4,
+            height=int(kl.TOTAL_H * YUNIT) + 4)
+        self.kbd_frame.pack(anchor="w", pady=4)
+        self.kbd_frame.pack_propagate(False)
         self.combo_preview = ctk.CTkLabel(tab, text="Kombi: (leer)",
                                           text_color="#7dd3fc")
-        self.combo_preview.pack(anchor="w", pady=4)
+        self.combo_preview.pack(anchor="w", pady=6)
+        self._build_keyboard()
 
-    def _add_key_row(self, parent, items):
-        row = ctk.CTkFrame(parent, fg_color="transparent")
-        row.pack(anchor="w", pady=2)
-        for text, name in items:
-            b = ctk.CTkButton(row, text=text, width=46, height=30,
-                              fg_color="gray25",
-                              command=lambda n=name: self._set_main(n))
-            b.pack(side="left", padx=2)
-            self._mainkey_buttons[name] = b
+    def _build_keyboard(self):
+        for _, btn in self._kbd_buttons:
+            btn.destroy()
+        self._kbd_buttons = []
+        for spec in kl.build(self.os_menu.get()):
+            dead = spec["name"] is None
+            b = ctk.CTkButton(
+                self.kbd_frame, text=spec["label"], font=("", 11),
+                width=int(spec["w"] * XUNIT) - 3,
+                height=int(spec["h"] * YUNIT) - 3,
+                corner_radius=4,
+                fg_color=KEY_DEAD if dead else KEY_BG, hover=not dead,
+                command=(None if dead else (lambda s=spec: self._on_key_click(s))))
+            b.place(x=spec["x"] * XUNIT + 1, y=spec["y"] * YUNIT + 1)
+            self._kbd_buttons.append((spec, b))
+        self._refresh_kbd_highlight()
 
-    def _toggle_mod(self, mod):
-        if mod in self.sel_mods:
-            self.sel_mods.discard(mod)
-            self._mod_buttons[mod].configure(fg_color="gray30")
+    def _on_key_click(self, spec):
+        name = spec["name"]
+        if spec["mod"]:
+            if name in self.sel_mods:
+                self.sel_mods.discard(name)
+            else:
+                self.sel_mods.add(name)
         else:
-            self.sel_mods.add(mod)
-            self._mod_buttons[mod].configure(fg_color=ACCENT)
+            self.sel_main = None if self.sel_main == name else name
+        self._refresh_kbd_highlight()
         self._update_combo_preview()
 
-    def _set_main(self, name):
-        if self.sel_main and self.sel_main in self._mainkey_buttons:
-            self._mainkey_buttons[self.sel_main].configure(fg_color="gray25")
-        if self.sel_main == name:           # nochmal klicken = abwaehlen
-            self.sel_main = None
-        else:
-            self.sel_main = name
-            self._mainkey_buttons[name].configure(fg_color=ACCENT)
-        self._update_combo_preview()
+    def _refresh_kbd_highlight(self):
+        for spec, btn in self._kbd_buttons:
+            name = spec["name"]
+            if name is None:
+                continue
+            active = (name in self.sel_mods) if spec["mod"] \
+                else (name == self.sel_main)
+            btn.configure(fg_color=ACCENT if active else KEY_BG)
+
+    _MOD_ORDER = ("GUI", "CONTROL", "ALT", "RIGHT_ALT", "SHIFT")
 
     def _current_combo_keys(self):
-        order = ["GUI", "CONTROL", "ALT", "SHIFT"]
-        keys = [m for m in order if m in self.sel_mods]
+        keys = [m for m in self._MOD_ORDER if m in self.sel_mods]
         if self.sel_main:
             keys.append(self.sel_main)
         return keys
@@ -337,6 +334,8 @@ class HackpadApp(ctk.CTk):
         self.name_entry.delete(0, "end")
         self.name_entry.insert(0, self.profile["name"])
         self.os_menu.set(self.profile.get("target_os", "mac"))
+        if hasattr(self, "kbd_frame"):
+            self._build_keyboard()
         self._refresh_keys()
         self._update_oled()
 
@@ -376,6 +375,7 @@ class HackpadApp(ctk.CTk):
 
     def _on_os_change(self, value):
         self.profile["target_os"] = value
+        self._build_keyboard()
         self._update_combo_preview()
 
     def _select_key(self, i):
@@ -389,11 +389,8 @@ class HackpadApp(ctk.CTk):
     # ===================================================================
     def _clear_editor(self):
         self.sel_mods.clear()
-        for b in self._mod_buttons.values():
-            b.configure(fg_color="gray30")
-        if self.sel_main and self.sel_main in self._mainkey_buttons:
-            self._mainkey_buttons[self.sel_main].configure(fg_color="gray25")
         self.sel_main = None
+        self._refresh_kbd_highlight()
         self._update_combo_preview()
         self.script_box.delete("1.0", "end")
         self._preview_script()
@@ -413,13 +410,14 @@ class HackpadApp(ctk.CTk):
             return
         kind = action.get("type")
         if kind in ("combo", "key"):
-            keys = action.get("keys", [action.get("key")]) if kind == "combo" \
-                else [action.get("key")]
-            for k in keys:
-                if k in ("GUI", "CONTROL", "ALT", "SHIFT"):
-                    self._toggle_mod(k)
+            keys = action.get("keys") if kind == "combo" else [action.get("key")]
+            for k in (keys or []):
+                if k in _MODIFIERS:
+                    self.sel_mods.add(k)
                 elif k:
-                    self._set_main(k)
+                    self.sel_main = k
+            self._refresh_kbd_highlight()
+            self._update_combo_preview()
             self.tabs.set("Kombi")
         elif kind == "media":
             self._set_media(action.get("code"))
