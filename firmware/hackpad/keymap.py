@@ -36,6 +36,17 @@ _KEY_ALIASES = {
     "SPACE": "SPACEBAR",
     "PAGEUP": "PAGE_UP",
     "PAGEDOWN": "PAGE_DOWN",
+    # Ziffern als Tasten: "1" -> Keycode.ONE usw.
+    "1": "ONE",
+    "2": "TWO",
+    "3": "THREE",
+    "4": "FOUR",
+    "5": "FIVE",
+    "6": "SIX",
+    "7": "SEVEN",
+    "8": "EIGHT",
+    "9": "NINE",
+    "0": "ZERO",
 }
 
 # Media-/Consumer-Tasten (separater HID-Report).

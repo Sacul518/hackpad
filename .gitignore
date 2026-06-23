@@ -25,3 +25,7 @@ __pycache__/
 # CircuitPython library bundle (copied onto the device, not versioned)
 firmware/lib/*
 !firmware/lib/README.md
+
+# App: virtualenv + local working copy
+app/.venv/
+app/last_config.json

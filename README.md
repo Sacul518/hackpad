@@ -46,7 +46,8 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 - [x] Case — top plate (open/tray-mount style: large switch opening, OLED window, encoder cutout)
 - [x] Firmware — CircuitPython base (matrix, encoder profile-browser, OLED, JSON-config macro engine)
 - [ ] Firmware — hardware bring-up & test (pending physical board)
-- [ ] Configurator app (Python + CustomTkinter)
+- [x] Configurator app — base GUI (Python + CustomTkinter: device detect, profiles, key editor, save to device)
+- [ ] Configurator app — polish (OLED preview, packaging for Win/Mac/Linux)
 
 ## Repository layout
 
@@ -58,6 +59,7 @@ KiCAD-lib/           Project-specific footprints
 export/hackpad.step  3D model of the PCB (reference for case design)
 case/                3D-printed case models (Tinkercad → STL)
 firmware/            CircuitPython firmware (config-driven macro engine)
+app/                 Configurator GUI (Python + CustomTkinter)
 docs/                config.json schema & script-syntax contract
 ```
 
