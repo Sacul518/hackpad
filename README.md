@@ -101,4 +101,5 @@ done by hand in KiCad — this was my first PCB. 🎉
 
 ## License
 
-To be decided (likely MIT for firmware, CERN-OHL or CC-BY-SA for hardware).
+[MIT](LICENSE) — for both the software (firmware + app) and the hardware
+(PCB + case). You're free to use, modify and share it; just keep the credit.
