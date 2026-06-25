@@ -1,0 +1,10 @@
+Item,Qty,Part,Notes
+1,1,Seeed XIAO RP2040,main MCU (through-hole)
+2,9,Cherry MX-compatible switch,"PCB-mount, 3x3 matrix"
+3,9,1N4148 diode,"THT, per-key (COL->ROW), n-key rollover"
+4,1,EC11 rotary encoder w/ push switch,profile browser
+5,1,SSD1306 0.96" OLED (I2C 4-pin),status / profile preview
+6,1,Custom PCB (2-layer),68 x 99.68 mm
+7,1,3D-printed case (tray + open top frame),"PLA, no supports"
+8,4,M2 screw,case mounting
+9,9,Keycap (DSA) + 1 encoder knob,from the kit

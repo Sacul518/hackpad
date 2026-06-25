@@ -43,6 +43,8 @@ Biggest challenges as a first-timer:
 | 8 | 4 | M2 screw | case mounting |
 | 9 | 9 | Keycap (DSA) + 1 encoder knob | from the kit |
 
+A machine-readable version is also provided as [`bom.csv`](bom.csv).
+
 ### Pin mapping (XIAO RP2040)
 
 | Function | Pin | | Function | Pin |
