@@ -89,7 +89,8 @@ hackpad.kicad_pcb          PCB layout
 KiCAD-lib/                 Project-specific footprints
 export/hackpad.step        3D model of the PCB (CAD reference for the case)
 export/hackpad-gerbers.zip Fabrication gerbers + drill (production, ready for JLCPCB)
-case/                      3D-printed case model (Tinkercad → STL: tray + open top frame)
+case/Hackpad-case.stl      3D-printed case model (Tinkercad → STL: tray + open top frame)
+case/Hackpad-case.step     Same case as STEP (for CAD inspection)
 firmware/                  CircuitPython firmware (config-driven macro engine)
 app/                       Configurator GUI (Python + CustomTkinter)
 docs/                      config.json schema & script-syntax contract
