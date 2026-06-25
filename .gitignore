@@ -34,3 +34,6 @@ app/last_config.json
 app/build/
 app/dist/
 app/*.spec
+Pictures/
+Ship/
+submission/

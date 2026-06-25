@@ -2,6 +2,25 @@
 
 A custom 9-key mechanical macropad with a rotary encoder and OLED display, built around the **Seeed XIAO RP2040**. Designed from scratch in KiCad as part of [Hack Club's Hackpad YSWS](https://hackpad.hackclub.com/).
 
+![Full render — PCB, case tray and top frame](images/render-full.png)
+
+## Inspiration & challenges
+
+I wanted a macropad that isn't just static keys but actually adapts to what I'm
+doing — so the **rotary encoder browses through profiles** (turn to preview on
+the OLED, click to confirm) and **every one of the 9 keys is freely
+configurable** through a desktop app, either as a key combo or a custom script.
+
+Biggest challenges as a first-timer:
+- **Routing a 2-layer board by hand** around the matrix diodes and the encoder
+  without crossing nets, while keeping a clean GND pour.
+- **Fitting everything under 100 × 100 mm** — I had to shrink the outline and
+  move the bottom edge and mounting holes without breaking the carefully placed
+  switch matrix (final size: **68 × 99.68 mm**).
+- **An open case without print supports** — exposed XIAO RP2040 because it looks
+  cool, plus an anti-flex support grid under the PCB so the board doesn't bend
+  when pressing keys.
+
 ## Features
 
 - **3×3 mechanical switch matrix** (9× Cherry MX–compatible keys) with per-key 1N4148 diodes for full n-key rollover
@@ -10,15 +29,19 @@ A custom 9-key mechanical macropad with a rotary encoder and OLED display, built
 - **Seeed XIAO RP2040** microcontroller (through-hole)
 - Custom PCB + 3D-printed case
 
-## Hardware
+## Bill of materials (BOM)
 
-| Part | Component |
-|------|-----------|
-| MCU | Seeed XIAO RP2040 (THT) |
-| Switches | 9× Cherry MX–compatible (PCB-mount) |
-| Diodes | 9× 1N4148 (THT, COL→ROW) |
-| Encoder | 1× EC11 rotary encoder with switch |
-| Display | 1× SSD1306 0.96" OLED (4-pin I²C) |
+| # | Qty | Part | Notes |
+|---|-----|------|-------|
+| 1 | 1 | Seeed XIAO RP2040 | main MCU (through-hole) |
+| 2 | 9 | Cherry MX–compatible switch | PCB-mount, 3×3 matrix |
+| 3 | 9 | 1N4148 diode | THT, per-key (COL→ROW), n-key rollover |
+| 4 | 1 | EC11 rotary encoder w/ push switch | profile browser |
+| 5 | 1 | SSD1306 0.96" OLED (I²C, 4-pin) | status / profile preview |
+| 6 | 1 | Custom PCB (2-layer) | 68 × 99.68 mm |
+| 7 | 1 | 3D-printed case (tray + open top frame) | PLA, no supports |
+| 8 | 4 | M2 screw | case mounting |
+| 9 | 9 | Keycap (DSA) + 1 encoder knob | from the kit |
 
 ### Pin mapping (XIAO RP2040)
 
@@ -32,6 +55,12 @@ A custom 9-key mechanical macropad with a rotary encoder and OLED display, built
 | Encoder SW | D10 | | | |
 
 Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode → row.
+
+## Gallery
+
+| Schematic | PCB | Case |
+|-----------|-----|------|
+| ![Schematic](images/schematic.png) | ![PCB](images/pcb.png) | ![Case](images/case.png) |
 
 ## Project status
 
@@ -54,15 +83,17 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 ## Repository layout
 
 ```
-hackpad.kicad_pro    KiCad project
-hackpad.kicad_sch    Schematic
-hackpad.kicad_pcb    PCB layout
-KiCAD-lib/           Project-specific footprints
-export/hackpad.step  3D model of the PCB (reference for case design)
-case/                3D-printed case model (Tinkercad → STL: tray + open top frame)
-firmware/            CircuitPython firmware (config-driven macro engine)
-app/                 Configurator GUI (Python + CustomTkinter)
-docs/                config.json schema & script-syntax contract
+hackpad.kicad_pro          KiCad project
+hackpad.kicad_sch          Schematic
+hackpad.kicad_pcb          PCB layout
+KiCAD-lib/                 Project-specific footprints
+export/hackpad.step        3D model of the PCB (CAD reference for the case)
+export/hackpad-gerbers.zip Fabrication gerbers + drill (production, ready for JLCPCB)
+case/                      3D-printed case model (Tinkercad → STL: tray + open top frame)
+firmware/                  CircuitPython firmware (config-driven macro engine)
+app/                       Configurator GUI (Python + CustomTkinter)
+docs/                      config.json schema & script-syntax contract
+images/                    Renders & photos (used in this README)
 ```
 
 ## Building
