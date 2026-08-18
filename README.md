@@ -85,13 +85,15 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 ## Repository layout
 
 ```
+production/                ► everything needed to build one: gerbers.zip,
+                             both case STLs, final firmware, BOM
 hackpad.kicad_pro          KiCad project
 hackpad.kicad_sch          Schematic
 hackpad.kicad_pcb          PCB layout
 KiCAD-lib/                 Project-specific footprints
 export/hackpad.step        3D model of the PCB (CAD reference for the case)
 export/hackpad-gerbers.zip Fabrication gerbers + drill (production, ready for JLCPCB)
-Case/Hackpad-case.stl      3D-printed case model (Tinkercad → STL: tray + open top frame)
+Case/Hackpad-case.stl      Case source model (both parts in one Tinkercad export)
 Case/Hackpad-case.step     Same case as STEP (for CAD inspection)
 firmware/                  CircuitPython firmware (config-driven macro engine)
 app/                       Configurator GUI (Python + CustomTkinter)
@@ -101,8 +103,16 @@ images/                    Renders & photos (used in this README)
 
 ## Building
 
-PCB is designed for fabrication at JLCPCB (2-layer). Firmware and assembly
-instructions will follow once the hardware is finalized.
+Everything you need to build one is in **[`production/`](production/)**:
+
+- `production/gerbers.zip` — send as-is to JLCPCB (2-layer, 68 × 99.68 mm)
+- `production/case/` — the **2 parts to 3D print**, as separate STLs
+  (bottom tray + top plate), no supports needed
+- `production/firmware/` — the final CircuitPython firmware, ready to copy onto
+  the `CIRCUITPY` drive (Adafruit libraries included)
+- `production/bom.csv` — parts list
+
+Step-by-step instructions: [`production/README.md`](production/README.md).
 
 ## Use of AI in this project
 
