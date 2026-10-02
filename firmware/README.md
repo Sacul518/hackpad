@@ -17,6 +17,7 @@ hackpad/
   macros.py        Macro-Engine: führt eine Aktion aus
   profiles.py      Profil-Browser + NVM-Persistenz
   display.py       OLED-Statusanzeige (läuft auch ohne OLED)
+  encoder.py       Drehknopf-Auswertung für D8/D9 (GPIO2/GPIO4)
 lib/               Adafruit-Bibliotheken (siehe unten — NICHT im Repo)
 ```
 
@@ -65,3 +66,14 @@ Die Python-Syntax lässt sich lokal prüfen:
 python3 -m py_compile boot.py code.py hackpad/*.py
 ```
 Echte Funktion (HID, Matrix, OLED) braucht das CircuitPython-Board.
+
+Encoder-Signalfolgen (beide Richtungen, Prellen, Startzustände, Pufferüberlauf):
+```
+python3 -m unittest discover -s tests -p 'test_encoder.py' -v
+```
+Den Befehl im Projektordner `hackpad/` ausführen. Der Drehknopf wird über
+`keypad.Keys` alle 1 ms im Hintergrund gescannt. `rotaryio` lässt sich auf
+dieser Platine nicht verwenden: D8 und D9 entsprechen GPIO2 und GPIO4,
+auf dem RP2040 verlangt `rotaryio` jedoch direkt benachbarte GPIOs.
+Sehr schnelle Drehungen können mit dem 1-ms-Scan verloren gehen; die echte
+Bedienung muss deshalb zusätzlich am aufgebauten Hackpad geprüft werden.

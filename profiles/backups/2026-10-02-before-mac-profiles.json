@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "active_profile": 0,
+  "profiles": [
+    {
+      "name": "test",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "V"
+            ]
+          }
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        }
+      ]
+    }
+  ]
+}

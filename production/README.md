@@ -4,14 +4,14 @@ Everything needed to actually build this Hackpad — PCB fabrication, 3D printin
 and flashing — in one folder.
 
 ```
-gerbers.zip                             PCB fabrication files (JLCPCB-ready)
+case/gerbers.zip                        PCB fabrication files (JLCPCB-ready)
 case/Hackpad-Case-1-Bottom-Tray.stl     3D print part 1 of 2
 case/Hackpad-Case-2-Top-Plate.stl       3D print part 2 of 2
 firmware/                               Final firmware, ready to drag onto CIRCUITPY
 bom.csv                                 Bill of materials
 ```
 
-## 1. PCB — `gerbers.zip`
+## 1. PCB — `case/gerbers.zip`
 
 2-layer board, **68 × 99.68 mm**, 1.6 mm FR4, HASL. Upload the zip as-is to
 JLCPCB (or any fab) — no changes needed. Contents:

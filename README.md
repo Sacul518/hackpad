@@ -85,7 +85,7 @@ Matrix is wired **COL2ROW**: column → switch → diode anode, diode cathode �
 ## Repository layout
 
 ```
-production/                ► everything needed to build one: gerbers.zip,
+production/                ► everything needed to build one: case/gerbers.zip,
                              both case STLs, final firmware, BOM
 hackpad.kicad_pro          KiCad project
 hackpad.kicad_sch          Schematic
@@ -105,7 +105,7 @@ images/                    Renders & photos (used in this README)
 
 Everything you need to build one is in **[`production/`](production/)**:
 
-- `production/gerbers.zip` — send as-is to JLCPCB (2-layer, 68 × 99.68 mm)
+- `production/case/gerbers.zip` — send as-is to JLCPCB (2-layer, 68 × 99.68 mm)
 - `production/case/` — the **2 parts to 3D print**, as separate STLs
   (bottom tray + top plate), no supports needed
 - `production/firmware/` — the final CircuitPython firmware, ready to copy onto

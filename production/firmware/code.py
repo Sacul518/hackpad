@@ -18,7 +18,6 @@ Pin-Mapping (aus dem Schaltplan):
 
 import board
 import keypad
-import rotaryio
 import usb_hid
 
 from adafruit_hid.keyboard import Keyboard
@@ -27,6 +26,7 @@ from adafruit_hid.consumer_control import ConsumerControl
 
 from hackpad import config as config_mod
 from hackpad import display as display_mod
+from hackpad.encoder import IncrementalEncoder
 from hackpad.macros import MacroEngine
 from hackpad.profiles import ProfileManager
 
@@ -63,7 +63,7 @@ def main():
         column_pins=COLUMN_PINS,
         columns_to_anodes=True,
     )
-    encoder = rotaryio.IncrementalEncoder(board.D8, board.D9)
+    encoder = IncrementalEncoder(board.D8, board.D9)
     enc_button = keypad.Keys((board.D10,), value_when_pressed=False, pull=True)
     last_position = encoder.position
 

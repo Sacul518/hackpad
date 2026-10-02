@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "active_profile": 0,
+  "profiles": [
+    {
+      "name": "Media",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "Vorheriger Titel",
+          "action": {
+            "type": "media",
+            "code": "PREV_TRACK"
+          }
+        },
+        {
+          "label": "Play / Pause",
+          "action": {
+            "type": "media",
+            "code": "PLAY_PAUSE"
+          }
+        },
+        {
+          "label": "Naechster Titel",
+          "action": {
+            "type": "media",
+            "code": "NEXT_TRACK"
+          }
+        },
+        {
+          "label": "Leiser",
+          "action": {
+            "type": "media",
+            "code": "VOLUME_DOWN"
+          }
+        },
+        {
+          "label": "Stumm",
+          "action": {
+            "type": "media",
+            "code": "MUTE"
+          }
+        },
+        {
+          "label": "Lauter",
+          "action": {
+            "type": "media",
+            "code": "VOLUME_UP"
+          }
+        },
+        {
+          "label": "Pfeil links",
+          "action": {
+            "type": "key",
+            "key": "LEFT_ARROW"
+          }
+        },
+        {
+          "label": "Stop",
+          "action": {
+            "type": "media",
+            "code": "STOP"
+          }
+        },
+        {
+          "label": "Pfeil rechts",
+          "action": {
+            "type": "key",
+            "key": "RIGHT_ARROW"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Code",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "Kopieren",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "C"
+            ]
+          }
+        },
+        {
+          "label": "Einfuegen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "V"
+            ]
+          }
+        },
+        {
+          "label": "Ausschneiden",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "X"
+            ]
+          }
+        },
+        {
+          "label": "Rueckgaengig",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "Y"
+            ]
+          }
+        },
+        {
+          "label": "Wiederholen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SHIFT",
+              "Y"
+            ]
+          }
+        },
+        {
+          "label": "Speichern",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "S"
+            ]
+          }
+        },
+        {
+          "label": "Befehlspalette",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SHIFT",
+              "P"
+            ]
+          }
+        },
+        {
+          "label": "Datei oeffnen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "P"
+            ]
+          }
+        },
+        {
+          "label": "Formatieren",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "ALT",
+              "SHIFT",
+              "F"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alltag",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "Kopieren",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "C"
+            ]
+          }
+        },
+        {
+          "label": "Einfuegen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "V"
+            ]
+          }
+        },
+        {
+          "label": "Ausschneiden",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "X"
+            ]
+          }
+        },
+        {
+          "label": "Rueckgaengig",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "Y"
+            ]
+          }
+        },
+        {
+          "label": "Wiederholen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SHIFT",
+              "Y"
+            ]
+          }
+        },
+        {
+          "label": "Alles markieren",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "A"
+            ]
+          }
+        },
+        {
+          "label": "Spotlight",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SPACEBAR"
+            ]
+          }
+        },
+        {
+          "label": "Screenshot",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SHIFT",
+              "FOUR"
+            ]
+          }
+        },
+        {
+          "label": "Emoji",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "CONTROL",
+              "SPACEBAR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Browser",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "Neuer Tab",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "T"
+            ]
+          }
+        },
+        {
+          "label": "Tab wiederherstellen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "SHIFT",
+              "T"
+            ]
+          }
+        },
+        {
+          "label": "Tab schliessen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "W"
+            ]
+          }
+        },
+        {
+          "label": "Tab zurueck",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "CONTROL",
+              "SHIFT",
+              "TAB"
+            ]
+          }
+        },
+        {
+          "label": "Neu laden",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "R"
+            ]
+          }
+        },
+        {
+          "label": "Tab weiter",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "CONTROL",
+              "TAB"
+            ]
+          }
+        },
+        {
+          "label": "Adresszeile",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "L"
+            ]
+          }
+        },
+        {
+          "label": "Seite durchsuchen",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "F"
+            ]
+          }
+        },
+        {
+          "label": "Escape",
+          "action": {
+            "type": "key",
+            "key": "ESCAPE"
+          }
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "target_os": "mac",
+      "keys": [
+        {
+          "label": "",
+          "action": {
+            "type": "combo",
+            "keys": [
+              "GUI",
+              "V"
+            ]
+          }
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        },
+        {
+          "label": "",
+          "action": null
+        }
+      ]
+    }
+  ]
+}
